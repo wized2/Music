@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Character encoding -->
+  <meta charset="UTF-8">
+  <!-- Responsive viewport - FIXED: user-scalable=no prevents zooming -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#6750A4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <!-- Social Media Meta Tags -->
+  <meta property="og:title" content="Endroid Music">
+  <meta property="og:description" content="A simple web-based music player">
+  <meta property="og:image" content="/icon.svg">
+  <meta property="og:url" content="https://yourdomain.com">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Endroid Music">
+  <meta name="twitter:description" content="A simple web-based music player">
+  <meta name="twitter:image" content="/icon.svg">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Favicon and Icons (using icon.svg as specified) -->
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <link rel="mask-icon" href="/icon.svg" color="#6750A4">
+  
+  <!-- Windows PWA Support -->
+  <meta name="msapplication-TileColor" content="#6750A4">
+  <meta name="msapplication-TileImage" content="/icon.svg">
+  
+  <!-- Page title -->
+  <title>Endroid Music</title>
+  
+  <style>
+    /* CSS custom properties for shadow effects */
+    :root {
+      --shadow-color: 286deg 36% 56%;
+      --shadow-elevation-low: 
+        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+        0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+        1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+      --shadow-elevation-medium: 
+        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+        0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+        2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+        5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+      --shadow-elevation-high: 
+        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+        1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+        2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+        4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+        7.1px 14.1px 17.7px -1.4px hsl(var(--shadow-color) / 0.34),
+        11px 21.9px 27.5px -1.8px hsl(var(--shadow-color) / 0.34),
+        16.3px 32.6px 41px -2.1px hsl(var(--shadow-color) / 0.34),
+        23.4px 46.8px 58.8px -2.5px hsl(var(--shadow-color) / 0.34);
+      /* Custom property for mute button color */
+      --mute-button-color: #4CAF50; /* Default: green (unmuted) */
+    }
+    
+    /* Basic body styling - ADDED user-select: none here */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      /* Added to ensure proper height */
+      min-height: 100vh;
+      margin: 0;
+      /* Prevents text selection and copying */
+      -webkit-user-select: none; /* Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      user-select: none; /* Standard */
+    }
+    
+    /* Allow selection only on input elements */
+    input {
+      -webkit-user-select: auto !important;
+      -moz-user-select: auto !important;
+      -ms-user-select: auto !important;
+      user-select: auto !important;
+    }
+    
+    /* Main container styling */
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      background-color: #6750A4;
+      backdrop-filter: blur(20px);
+      padding: 20px;
+      border-radius: 10px;
+      /* Fixed: Removed duplicate box-shadow property, kept the custom one */
+      box-shadow: var(--shadow-elevation-medium);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    
+    /* Music player container */
+    .music-player {
+      width: 100%;
+      margin-top: 18px;
+    }
+    
+    /* WebKit browser audio control styling */
+    audio::-webkit-media-controls-play-button {
+      background-color: #6750A4;
+      border-radius: 50%;
+    }
+    
+    /* Mute button using CSS custom property */
+    audio::-webkit-media-controls-mute-button {
+      background-color: var(--mute-button-color);
+      border-radius: 50%;
+    }
+    
+    audio::-webkit-media-controls-panel {
+      background-color: #fff;
+      border-radius: 100px;
+    }
+    
+    /* Custom colors for time displays - ADDED THIS SECTION */
+    audio::-webkit-media-controls-current-time-display {
+      /* Purple color matching your theme for current time */
+      color: #6750A4;
+      font-family: Arial, sans-serif;
+    }
+    
+    audio::-webkit-media-controls-time-remaining-display {
+      /* Orange color for time remaining display */
+      color: #FF5722;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <!-- Main container with music player interface -->
+  <div class="container">
+    <h2>Endroid Music</h2>
+    <!-- File input for MP3 files -->
+    <input type="file" id="music-file" accept=".mp3">
+    <!-- Audio player element -->
+    <audio id="music-player" class="music-player" controls></audio>
+  </div>
+
+  <script>
+    // Get DOM elements
+    const musicFile = document.getElementById('music-file');
+    const musicPlayer = document.getElementById('music-player');
+    
+    // Event listener for file selection
+    musicFile.addEventListener('change', () => {
+      // Get the selected file
+      const file = musicFile.files[0];
+      if (file) {
+        // Create object URL for the file
+        const url = URL.createObjectURL(file);
+        // Set the audio player source
+        musicPlayer.src = url;
+      }
+    });
+    
+    // Function to update mute button color based on muted state
+    function updateMuteButtonColor() {
+      if (musicPlayer.muted) {
+        // When muted: Orange color
+        document.documentElement.style.setProperty('--mute-button-color', '#FF5722');
+      } else {
+        // When not muted: Green color
+        document.documentElement.style.setProperty('--mute-button-color', '#4CAF50');
+      }
+    }
+    
+    // Listen for volume/mute changes
+    musicPlayer.addEventListener('volumechange', updateMuteButtonColor);
+    
+    // Initialize mute button color
+    updateMuteButtonColor();
+    
+    // Additional protection against copying (optional)
+    document.addEventListener('copy', function(e) {
+      e.preventDefault();
+      return false;
+    });
+    
+    document.addEventListener('cut', function(e) {
+      e.preventDefault();
+      return false;
+    });
+    
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+    
+    // Service Worker Registration for PWA
+    if ('serviceWorker' in navigator) {
+      // Register service worker when page loads
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(function(registration) {
+            // Registration successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          })
+          .catch(function(error) {
+            // Registration failed
+            console.log('ServiceWorker registration failed: ', error);
+          });
+      });
+    }
+    
+    // Cleanup object URLs when leaving page
+    window.addEventListener('beforeunload', function() {
+      if (musicPlayer.src && musicPlayer.src.startsWith('blob:')) {
+        URL.revokeObjectURL(musicPlayer.src);
+      }
+    });
+  </script>
+</body>
+</html>

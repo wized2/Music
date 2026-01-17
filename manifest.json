@@ -1,0 +1,49 @@
+{
+  "name": "Endroid Music",
+  "short_name": "Music",
+  "description": "A powerful offline music player for local files",
+  "start_url": "/Music/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#6750A4",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["music", "entertainment", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Play Music",
+      "short_name": "Play",
+      "description": "Open the music player",
+      "url": "/",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96" }]
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "features": [
+    "audio",
+    "file system",
+    "offline"
+  ]
+}
