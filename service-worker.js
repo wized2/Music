@@ -3,9 +3,9 @@
 // Date: 2024
 
 // Cache Names - Using dual cache strategy
-const CACHE_PRIMARY = 'endroid-music-primary-v2';
-const CACHE_SECONDARY = 'endroid-music-secondary-v2';
-const CACHE_DATA = 'endroid-music-data-v2';
+const CACHE_PRIMARY = 'endroid-music-primary-v2.1';
+const CACHE_SECONDARY = 'endroid-music-secondary-v2.1';
+const CACHE_DATA = 'endroid-music-data-v2.1';
 
 // Critical assets that must be cached for offline use
 const CRITICAL_ASSETS = [
@@ -15,6 +15,7 @@ const CRITICAL_ASSETS = [
   '/icon.svg',
   // Self-reference for resilience
   '/service-worker.js'
+  'https://fonts.googleapis.com/icon?family=Material+Icons'
 ];
 
 // Optional assets that can be cached but aren't critical
