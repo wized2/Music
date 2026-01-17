@@ -1,47 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Character encoding -->
   <meta charset="UTF-8">
-  <!-- Responsive viewport - FIXED: user-scalable=no prevents zooming -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  
-  <!-- PWA Meta Tags -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <meta name="theme-color" content="#6750A4">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
-  <!-- Social Media Meta Tags -->
   <meta property="og:title" content="Endroid Music">
   <meta property="og:description" content="A simple web-based music player">
   <meta property="og:image" content="/icon.svg">
-  <meta property="og:url" content="https://yourdomain.com">
+  <meta property="og:url" content="https://wized2.github.io/Music">
   <meta property="og:type" content="website">
-  
-  <!-- Twitter Meta Tags -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Endroid Music">
   <meta name="twitter:description" content="A simple web-based music player">
   <meta name="twitter:image" content="/icon.svg">
-  
-  <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
-  
-  <!-- Favicon and Icons (using icon.svg as specified) -->
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="shortcut icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icon.svg">
   <link rel="mask-icon" href="/icon.svg" color="#6750A4">
-  
-  <!-- Windows PWA Support -->
   <meta name="msapplication-TileColor" content="#6750A4">
   <meta name="msapplication-TileImage" content="/icon.svg">
-  
-  <!-- Page title -->
   <title>Endroid Music</title>
-  
   <style>
-    /* CSS custom properties for shadow effects */
     :root {
       --shadow-color: 286deg 36% 56%;
       --shadow-elevation-low: 
@@ -53,34 +36,20 @@
         0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
         2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
         5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
-      --shadow-elevation-high: 
-        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
-        1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
-        2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
-        4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
-        7.1px 14.1px 17.7px -1.4px hsl(var(--shadow-color) / 0.34),
-        11px 21.9px 27.5px -1.8px hsl(var(--shadow-color) / 0.34),
-        16.3px 32.6px 41px -2.1px hsl(var(--shadow-color) / 0.34),
-        23.4px 46.8px 58.8px -2.5px hsl(var(--shadow-color) / 0.34);
-      /* Custom property for mute button color */
       --mute-button-color: #4CAF50; /* Default: green (unmuted) */
     }
     
-    /* Basic body styling - ADDED user-select: none here */
     body {
       font-family: Arial, sans-serif;
       background-color: #000;
-      /* Added to ensure proper height */
       min-height: 100vh;
       margin: 0;
-      /* Prevents text selection and copying */
-      -webkit-user-select: none; /* Safari */
-      -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* IE10+/Edge */
-      user-select: none; /* Standard */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
     
-    /* Allow selection only on input elements */
     input {
       -webkit-user-select: auto !important;
       -moz-user-select: auto !important;
@@ -88,7 +57,6 @@
       user-select: auto !important;
     }
     
-    /* Main container styling */
     .container {
       max-width: 400px;
       margin: 40px auto;
@@ -96,17 +64,124 @@
       backdrop-filter: blur(20px);
       padding: 20px;
       border-radius: 10px;
-      /* Fixed: Removed duplicate box-shadow property, kept the custom one */
       box-shadow: var(--shadow-elevation-medium);
       border: 1px solid rgba(255, 255, 255, 0.3);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
     
-    /* Music player container */
     .music-player {
       width: 100%;
       margin-top: 18px;
+      height: 50px;
+    }
+    
+    .custom-controls-bar {
+      display: none;
+      width: 100%;
+      height: 50px;
+      background-color: #fff;
+      border-radius: 100px;
+      margin-top: 15px;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .control-buttons {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 0 20px;
+    }
+    
+    .control-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      position: relative;
+      background-color: #4CAF50; /* Green for off state */
+      color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      padding: 0;
+      margin: 0;
+    }
+    
+    .control-btn .material-icons {
+      font-size: 22px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .speed-text {
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+    }
+    
+    .control-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .control-btn.speed-active,
+    .control-btn.loop-active {
+      background-color: #FF5722;
+      box-shadow: 0 0 10px rgba(255, 87, 34, 0.4);
+    }
+    
+    .control-btn.sleep-active {
+      background-color: #F44336;
+      box-shadow: 0 0 10px rgba(244, 67, 54, 0.4);
+    }
+    
+    .control-btn.loop-active .material-icons {
+      animation: rotate 2s linear infinite;
+    }
+    
+    .control-btn.sleep-active .material-icons {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+    
+    /* Timer indicator */
+    .timer-indicator {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #F44336;
+      color: white;
+      font-size: 9px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .control-btn.sleep-active .timer-indicator {
+      display: flex;
     }
     
     /* WebKit browser audio control styling */
@@ -115,7 +190,6 @@
       border-radius: 50%;
     }
     
-    /* Mute button using CSS custom property */
     audio::-webkit-media-controls-mute-button {
       background-color: var(--mute-button-color);
       border-radius: 50%;
@@ -126,97 +200,324 @@
       border-radius: 100px;
     }
     
-    /* Custom colors for time displays - ADDED THIS SECTION */
     audio::-webkit-media-controls-current-time-display {
-      /* Purple color matching your theme for current time */
       color: #6750A4;
       font-family: Arial, sans-serif;
     }
     
     audio::-webkit-media-controls-time-remaining-display {
-      /* Orange color for time remaining display */
       color: #FF5722;
       font-family: Arial, sans-serif;
+    }
+    
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      background: #6750A4;
+      padding: 30px;
+      border-radius: 15px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .modal-title {
+      color: white;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    
+    .time-input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+    
+    .time-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    
+    .modal-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .modal-btn.set {
+      background: #4CAF50;
+      color: white;
+    }
+    
+    .modal-btn.cancel {
+      background: #757575;
+      color: white;
+    }
+    
+    .modal-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
-  <!-- Main container with music player interface -->
   <div class="container">
     <h2>Endroid Music</h2>
-    <!-- File input for MP3 files -->
     <input type="file" id="music-file" accept=".mp3">
-    <!-- Audio player element -->
     <audio id="music-player" class="music-player" controls></audio>
+    <div class="custom-controls-bar" id="custom-controls-bar">
+      <div class="control-buttons">
+        <button class="control-btn" id="speed-2x-btn" title="2× Speed">
+          <span class="speed-text">2×</span>
+        </button>
+        
+        <button class="control-btn" id="speed-3x-btn" title="3× Speed">
+          <span class="speed-text">3×</span>
+        </button>
+        <button class="control-btn" id="loop-btn" title="Loop Current Song">
+          <span class="material-icons">repeat_one</span>
+        </button>
+        <button class="control-btn" id="sleep-btn" title="Sleep Timer">
+          <span class="material-icons">av_timer</span>
+          <span class="timer-indicator" id="timer-indicator"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="sleep-modal">
+    <div class="modal-content">
+      <h3 class="modal-title">Set Sleep Timer</h3>
+      <input type="number" class="time-input" id="minutes-input" 
+             placeholder="Enter minutes (1-180)" min="1" max="180">
+      <div class="modal-buttons">
+        <button class="modal-btn set" id="set-timer-btn">Set Timer</button>
+        <button class="modal-btn cancel" id="cancel-timer-btn">Cancel</button>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Get DOM elements
     const musicFile = document.getElementById('music-file');
     const musicPlayer = document.getElementById('music-player');
-    
-    // Event listener for file selection
+    const customControlsBar = document.getElementById('custom-controls-bar');
+    const speed2xBtn = document.getElementById('speed-2x-btn');
+    const speed3xBtn = document.getElementById('speed-3x-btn');
+    const loopBtn = document.getElementById('loop-btn');
+    const sleepBtn = document.getElementById('sleep-btn');
+    const timerIndicator = document.getElementById('timer-indicator');
+    const sleepModal = document.getElementById('sleep-modal');
+    const minutesInput = document.getElementById('minutes-input');
+    const setTimerBtn = document.getElementById('set-timer-btn');
+    const cancelTimerBtn = document.getElementById('cancel-timer-btn');
+    let currentSpeed = 1.0;
+    let isLooping = false;
+    let sleepTimer = null;
+    let remainingMinutes = 0;
     musicFile.addEventListener('change', () => {
-      // Get the selected file
       const file = musicFile.files[0];
       if (file) {
-        // Create object URL for the file
         const url = URL.createObjectURL(file);
-        // Set the audio player source
         musicPlayer.src = url;
+        customControlsBar.style.display = 'flex';
+        resetAllControls();
+      }
+    });
+    function resetAllControls() {
+      currentSpeed = 1.0;
+      musicPlayer.playbackRate = currentSpeed;
+      speed2xBtn.classList.remove('speed-active');
+      speed3xBtn.classList.remove('speed-active');
+      isLooping = false;
+      musicPlayer.loop = false;
+      loopBtn.classList.remove('loop-active');
+      clearSleepTimer();
+    }
+    speed2xBtn.addEventListener('click', () => {
+      if (currentSpeed === 2.0) {
+        currentSpeed = 1.0;
+        speed2xBtn.classList.remove('speed-active');
+      } else {
+        currentSpeed = 2.0;
+        speed2xBtn.classList.add('speed-active');
+        speed3xBtn.classList.remove('speed-active');
+      }
+      musicPlayer.playbackRate = currentSpeed;
+    });
+    
+    speed3xBtn.addEventListener('click', () => {
+      if (currentSpeed === 3.0) {
+        currentSpeed = 1.0;
+        speed3xBtn.classList.remove('speed-active');
+      } else {
+        currentSpeed = 3.0;
+        speed3xBtn.classList.add('speed-active');
+        speed2xBtn.classList.remove('speed-active');
+      }
+      musicPlayer.playbackRate = currentSpeed;
+    });
+    
+    loopBtn.addEventListener('click', () => {
+      isLooping = !isLooping;
+      musicPlayer.loop = isLooping;
+      loopBtn.classList.toggle('loop-active');
+    });
+    
+    sleepBtn.addEventListener('click', () => {
+      if (sleepTimer) {
+        clearSleepTimer();
+        sleepBtn.classList.remove('sleep-active');
+      } else {
+        sleepModal.style.display = 'flex';
+        minutesInput.focus();
       }
     });
     
-    // Function to update mute button color based on muted state
+    setTimerBtn.addEventListener('click', () => {
+      const minutes = parseInt(minutesInput.value);
+      if (minutes >= 1 && minutes <= 180) {
+        setSleepTimer(minutes);
+        sleepModal.style.display = 'none';
+        minutesInput.value = '';
+      } else {
+        alert('Please enter a number between 1 and 180 minutes.');
+      }
+    });
+    
+    cancelTimerBtn.addEventListener('click', () => {
+      sleepModal.style.display = 'none';
+      minutesInput.value = '';
+    });
+    
+    sleepModal.addEventListener('click', (e) => {
+      if (e.target === sleepModal) {
+        sleepModal.style.display = 'none';
+        minutesInput.value = '';
+      }
+    });
+    
+    function setSleepTimer(minutes) {
+      clearSleepTimer();
+      
+      remainingMinutes = minutes;
+      updateTimerIndicator();
+      
+      sleepTimer = setTimeout(() => {
+        musicPlayer.pause();
+        musicPlayer.currentTime = 0;
+        clearSleepTimer();
+      }, minutes * 60 * 1000);
+      
+      sleepBtn.classList.add('sleep-active');
+    }
+    
+    function clearSleepTimer() {
+      if (sleepTimer) {
+        clearTimeout(sleepTimer);
+        sleepTimer = null;
+      }
+      remainingMinutes = 0;
+      sleepBtn.classList.remove('sleep-active');
+      timerIndicator.textContent = '';
+    }
+    
+    function updateTimerIndicator() {
+      if (remainingMinutes > 0) {
+        if (remainingMinutes >= 60) {
+          const hours = Math.floor(remainingMinutes / 60);
+          timerIndicator.textContent = hours + 'h';
+        } else {
+          timerIndicator.textContent = remainingMinutes + 'm';
+        }
+      }
+    }
+    
+    setInterval(() => {
+      if (sleepTimer && remainingMinutes > 0) {
+        remainingMinutes--;
+        updateTimerIndicator();
+        
+        if (remainingMinutes <= 0) {
+          musicPlayer.pause();
+          musicPlayer.currentTime = 0;
+          clearSleepTimer();
+        }
+      }
+    }, 60 * 1000);
+    
     function updateMuteButtonColor() {
       if (musicPlayer.muted) {
-        // When muted: Orange color
         document.documentElement.style.setProperty('--mute-button-color', '#FF5722');
       } else {
-        // When not muted: Green color
         document.documentElement.style.setProperty('--mute-button-color', '#4CAF50');
       }
     }
     
     // Listen for volume/mute changes
     musicPlayer.addEventListener('volumechange', updateMuteButtonColor);
-    
-    // Initialize mute button color
     updateMuteButtonColor();
     
-    // Additional protection against copying (optional)
-    document.addEventListener('copy', function(e) {
-      e.preventDefault();
-      return false;
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      
+      if (musicPlayer.src) {
+        switch(e.code) {
+          case 'Digit2':
+            speed2xBtn.click();
+            break;
+          case 'Digit3':
+            speed3xBtn.click();
+            break;
+          case 'KeyL':
+            loopBtn.click();
+            break;
+          case 'KeyS':
+            sleepBtn.click();
+            break;
+        }
+      }
     });
     
-    document.addEventListener('cut', function(e) {
-      e.preventDefault();
-      return false;
-    });
-    
-    document.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-      return false;
-    });
-    
-    // Service Worker Registration for PWA
+    document.addEventListener('copy', (e) => e.preventDefault());
+    document.addEventListener('cut', (e) => e.preventDefault());
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
     if ('serviceWorker' in navigator) {
-      // Register service worker when page loads
       window.addEventListener('load', function() {
         navigator.serviceWorker.register('service-worker.js')
           .then(function(registration) {
-            // Registration successful
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
           })
           .catch(function(error) {
-            // Registration failed
             console.log('ServiceWorker registration failed: ', error);
           });
       });
     }
     
-    // Cleanup object URLs when leaving page
     window.addEventListener('beforeunload', function() {
       if (musicPlayer.src && musicPlayer.src.startsWith('blob:')) {
         URL.revokeObjectURL(musicPlayer.src);
